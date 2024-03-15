@@ -60,6 +60,8 @@ def make_stat():
     
     plt.plot(arr_n, means)
     plt.scatter(arr_n, means)
+    plt.xlabel('num of elements')
+    plt.ylabel('time, milliseconds')
     plt.savefig('plot_times.png')
     plt.show()
     
