@@ -38,12 +38,14 @@ def make_stat():
     means = []
     intervals = []
     
+    arr_n =[]
     
     for i in range(len(times)):
         for j in range(len(times[i])):
             if times[i][j] != '\n':
                 times[i][j] = int(times[i][j])
         times[i].remove('\n')
+        arr_n.append(times[i][0])
         times[i].pop(0)
         
         means.append(stat.mean(times[i]))
@@ -56,17 +58,22 @@ def make_stat():
     print(means)
     print(intervals)
     
+    plt.plot(arr_n, means)
+    plt.scatter(arr_n, means)
+    plt.savefig('plot_times.png')
+    plt.show()
+    
 
 if __name__ == "__main__":
     file = open('checking.txt', 'w')
     make_stat()
-    # for n in range(200, 2001, 200):
-    #     mat1 = reading(f'1matrix/1_matrix{n}.txt')
-    #     mat2 = reading(f'2matrix/2_matrix{n}.txt')
-    #     mat_res = reading(f'res_matrix/res_matrix{n}.txt')
-    #     res = checking(mat1, mat2, mat_res, n)
-    #     file.write(f'Cheling for n = {n}: {res}\n')
-    #     print(n, res)
+    for n in range(200, 2001, 200):
+        mat1 = reading(f'1matrix/1_matrix{n}.txt')
+        mat2 = reading(f'2matrix/2_matrix{n}.txt')
+        mat_res = reading(f'res_matrix/res_matrix{n}.txt')
+        res = checking(mat1, mat2, mat_res, n)
+        file.write(f'Cheling for n = {n}: {res}\n')
+        print(n, res)
             
         
     
