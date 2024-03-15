@@ -19,24 +19,13 @@ void PrintMat(int n, int** Mat) {
 	}
 }
 
-void Creator(int n, int*** Mat, const string filename) {
-	*Mat = new int* [n];
-	fstream fout;
-	fout.open(filename, ofstream::out | ofstream::trunc);
-	fout << n << endl;
-	for (int i = 0; i < n; i++)
-	{
-		(*Mat)[i] = new int[n];
-	}
-
+void Creator(int n, int*** Mat) {
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < n; j++) 
 		{
 			(*Mat)[i][j] = rand() % (100 + 100 + 1) - 100;
-			fout << (*Mat)[i][j] << ' ';
 		}
-		fout << endl;
 	}
 }
 
@@ -111,43 +100,42 @@ int main() {
 
 	fstream fout;
 	fout.open("times.txt", ofstream::out | ofstream::trunc);
-	
+	double ti[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 	for (int n = 200; n <= 2000; n += 200)
 	{
 		cout << n << endl;
 
+
+		Mat1 = new int* [n];
+		Mat2 = new int* [n];
+		Mat_res = new int* [n];
+
+		for (int i = 0; i < n; i++)
+		{
+			Mat_res[i] = new int[n];
+			Mat1[i] = new int[n];
+			Mat2[i] = new int[n];
+		}
 		for (int i = 1; i <= 10; i++)
 		{
 			cout << '\t' << i;
-			Creator(n, &Mat1, string("1matrix/1_matrix") + to_string(n) + string(".txt"));
-			/*PrintMat(n, Mat1);*/
-
-			Creator(n, &Mat2, string("2matrix/2_matrix") + to_string(n) + string(".txt"));
-			/*PrintMat(n, Mat2);*/
+			Creator(n, &Mat1);
+			Creator(n, &Mat2);
 
 			auto start = chrono::steady_clock::now();
 			Mat_res = Multiplier(n, Mat1, Mat2);
 			auto end = chrono::steady_clock::now();
 
-			fout << n << ';' << double(chrono::duration_cast<chrono::milliseconds>(end - start).count());
-			Writer(n, Mat_res, string("res_matrix/res_matrix") + to_string(n) + string(".txt"));
-			/*PrintMat(3, Mat_res);*/
-			for (int i = 0; i < n; i++)
-			{
-				delete[] Mat1[i];
-				delete[] Mat2[i];
-				delete[] Mat_res[i];
-			}
+			ti[i -1] = double(chrono::duration_cast<chrono::milliseconds>(end - start).count());
 
-			delete[] Mat1;
-			delete[] Mat2;
-			delete[] Mat_res;
-
-			Mat1 = NULL;
-			Mat2 = NULL;
-			Mat_res = NULL;
 		}
+		Writer(n, Mat_res, string("res_matrix/res_matrix") + to_string(n) + string(".txt"));
+		Writer(n, Mat1, string("1matrix/1_matrix") + to_string(n) + string(".txt"));
+		Writer(n, Mat2, string("2matrix/2_matrix") + to_string(n) + string(".txt"));
+		fout << n << ';';
+		for (int i = 0; i < 10; i++)
+			fout << ti[i] << ';';
 		fout << endl;
 		cout << endl;
 	}
