@@ -30,6 +30,29 @@ def checking(mat1, mat2, mat_res, n):
     
 
 def make_stat():
+    # with open(f'1lab/times.txt') as file:
+    #     lines = file.readlines()
+    # times = []
+    # #print(lines)
+    # for l in lines:
+    #     times.append(l.split(';'))
+        
+    # means = []
+    # arr_n =[]
+    
+    # for i in range(len(times)):
+    #     for j in range(len(times[i])):
+    #         if times[i][j] != '\n':
+    #             times[i][j] = int(times[i][j])
+    #     times[i].remove('\n')
+    #     arr_n.append(times[i][0])
+    #     times[i].pop(0)
+    #     means.append(stat.mean(times[i]))
+        
+    # plt.plot(arr_n, means, marker="o", color = 'black')
+    # plt.xlabel('num of elements')
+    # plt.ylabel('time, milliseconds')
+        
     for threads_num in range(5, 21, 5):
         with open(f'2lab/times{threads_num}.txt') as file:
             lines = file.readlines()
@@ -64,8 +87,9 @@ def make_stat():
         plt.plot(arr_n, means, marker="o")
         plt.xlabel('num of elements')
         plt.ylabel('time, milliseconds')
-        plt.savefig('2lab/plot_times.png')
-    plt.legend(['5 threads', '10 threads', '15 threads', '20 thrreads'])
+        
+    plt.legend(['5 threads', '10 threads', '15 threads', '20 threads'])
+    plt.savefig('2lab/plot_times.png')
     plt.show()
     
 
