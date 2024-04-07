@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="openMP.cpp" />
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="lab2-openMP.cpp" />
+    <ClCompile Include="lab1.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
